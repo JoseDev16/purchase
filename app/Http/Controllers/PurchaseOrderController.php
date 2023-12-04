@@ -14,7 +14,8 @@ class PurchaseOrderController extends Controller
 {
     public function index(){
         $clients = Client::all();
-        return view('PurchaseOrder.purchase-order-index',compact('clients'));
+        $purchaseOrders = PurchaseOrder::with('client')->get();
+        return view('PurchaseOrder.purchase-order-index',compact('clients','purchaseOrders'));
     }
 
     public function create(){
@@ -29,8 +30,16 @@ class PurchaseOrderController extends Controller
         $products = InvProduct::all();
         $units = InvUnitMeasurement::all();
         $purchaseOrder = PurchaseOrder::store($client->id);
-        $items =
-        return view('PurchaseOrder.purchase-order-create',compact('client','products','units','purchaseOrder'));
+        $items =array();
+        return view('PurchaseOrder.purchase-order-create',compact('client','products','units','purchaseOrder','items'));
+    }
+
+    public function getDetails(PurchaseOrder $purchaseOrder){
+        $items = PurchaseOrderDetail::getProducts($purchaseOrder->id);
+        $units = InvUnitMeasurement::all();
+        $products = InvProduct::all();
+        $client = Client::find($purchaseOrder->client_id);
+        return view('PurchaseOrder.purchase-order-create',compact('client','products','units','purchaseOrder','items'));
     }
 
     public function addProduct(Request $request){

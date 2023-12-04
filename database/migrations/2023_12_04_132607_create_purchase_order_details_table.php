@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('purchase_order_id')->constrained();
             $table->foreignId('inv_product_measurement_price_id')->constrained();
+            $table->integer('qty');
             $table->timestamps();
         });
     }

@@ -35,18 +35,24 @@
                     <th>Codigo</th>
                     <th>Cliente</th>
                     <th>Fecha Compra</th>
-                    <th>Fecha de envio</th>
                     <th>Acciones</th>
                 </tr>
             @endslot
             @slot('tbody')
-                <tr>
-                    <td>0101</td>
-                    <td>0101</td>
-                    <td>0101</td>
-                    <td>0101</td>
-                    <td>0101</td>
-                </tr>
+                @if(count($purchaseOrders) > 1)
+                        @foreach($purchaseOrders as $order)
+                            <tr>
+                                <td>{{$order->code}}</td>
+                                <td>{{$order->client->name.' '.$order->client->last_name}}</td>
+                                <td>{{$order->date}}</td>
+                                <td><a href="{{route('purchase-order.get-details',$order->id)}}"> Ver detalles</a></td>
+                            </tr>
+                        @endforeach
+                    @else
+                    <tr>
+                        No hay informacion disponible
+                    </tr>
+                    @endif
             @endslot
         @endcomponent
     </div>

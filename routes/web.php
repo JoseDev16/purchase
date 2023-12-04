@@ -22,3 +22,4 @@ Route::post('purchase-order/close',[\App\Http\Controllers\PurchaseOrderControlle
 
 Route::get('purchase-order',[\App\Http\Controllers\PurchaseOrderController::class,'index'])->name('purchase-orders.index');
 Route::get('purchase-order-create',[\App\Http\Controllers\PurchaseOrderController::class,'create'])->name('purchase-order.create');
+Route::get('purchase-order/{purchaseOrder}',[\App\Http\Controllers\PurchaseOrderController::class,'getDetails'])->name('purchase-order.get-details');
